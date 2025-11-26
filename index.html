@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🛡️ Cryptography ToolBox</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="header-nav">
+  <header>
+    <h1>🛡️ Cryptography ToolBox</h1>
+  </header>
+  
+  <nav id="cipherNav">
+    <button class="btn-tab" onclick="showCipher('caesar')" class="active">Caesar</button>
+    <button class="btn-tab" onclick="showCipher('mono')">Monoalphabetic</button>
+    <button class="btn-tab" onclick="showCipher('playfair')">Playfair</button>
+    <button class="btn-tab" onclick="showCipher('hill')">Hill</button>
+    <button class="btn-tab" onclick="showCipher('poly')">Polyalphabetic</button>
+    <button class="btn-tab" onclick="showCipher('rail')">Rail Fence</button>
+  </nav>
+</div>
+
+<div class="methodology-steps">
+    <pre id="methodologyPre"></pre>
+</div>
+
+<div class="container">
+
+  <!-- Caesar Cipher -->
+  <div class="cipher-section active" id="caesar">
+    <h2>Caesar Cipher</h2>
+    <label>Text:</label>
+    <textarea id="caesarText"></textarea>
+    <label>Key (Shift):</label>
+    <input type="number" id="caesarKey" value="3">
+    <button class="btn" onclick="caesarEncrypt()">Encrypt</button>
+    <button class="btn" onclick="caesarDecrypt()">Decrypt</button>
+    <div class="output" id="caesarOutput"></div>
+  </div>
+
+  <!-- Monoalphabetic Cipher -->
+  <div class="cipher-section" id="mono">
+    <h2>Monoalphabetic Cipher</h2>
+    <label>Text:</label>
+    <textarea id="monoText"></textarea>
+    <label>Key (26-letter substitution alphabet):</label>
+    <input id="monoKey" value="QWERTYUIOPASDFGHJKLZXCVBNM">
+    <button class="btn" onclick="monoEncrypt()">Encrypt</button>
+    <button class="btn" onclick="monoDecrypt()">Decrypt</button>
+    <div class="output" id="monoOutput"></div>
+  </div>
+
+  <!-- Playfair Cipher -->
+  <div class="cipher-section" id="playfair">
+    <h2>Playfair Cipher</h2>
+    <label>Text:</label>
+    <textarea id="playfairText"></textarea>
+    <label>Key:</label>
+    <input id="playfairKey" value="KEYWORD">
+    <button class="btn" onclick="playfairEncrypt()">Encrypt</button>
+    <button class="btn" onclick="playfairDecrypt()">Decrypt</button>
+    <div class="output" id="playfairOutput"></div>
+  </div>
+
+  <!-- Hill Cipher -->
+  <div class="cipher-section" id="hill">
+    <h2>Hill Cipher (2x2)</h2>
+    <label>Text:</label>
+    <textarea id="hillText"></textarea>
+    <label>Key Matrix (4 numbers, row-wise):</label>
+    <input id="hillKey" value="3 3 2 5">
+    <button class="btn" onclick="hillEncrypt()">Encrypt</button>
+    <button class="btn" onclick="hillDecrypt()">Decrypt</button>
+    <div class="output" id="hillOutput"></div>
+  </div>
+
+  <!-- Polyalphabetic Cipher -->
+  <div class="cipher-section" id="poly">
+    <h2>Polyalphabetic Cipher</h2>
+    <label>Text:</label>
+    <textarea id="vigenereText"></textarea>
+    <label>Key:</label>
+    <input id="vigenereKey" value="KEY">
+    <button class="btn" onclick="vigenereEncrypt()">Encrypt</button>
+    <button class="btn" onclick="vigenereDecrypt()">Decrypt</button>
+    <div class="output" id="vigenereOutput"></div>
+  </div>
+
+  <!-- Rail Fence Cipher -->
+  <div class="cipher-section" id="rail">
+    <h2>Rail Fence Cipher</h2>
+    <label>Text:</label>
+    <textarea id="railText"></textarea>
+    <label>Rails:</label>
+    <input type="number" id="railKey" value="3">
+    <button class="btn" onclick="railEncrypt()">Encrypt</button>
+    <button class="btn" onclick="railDecrypt()">Decrypt</button>
+    <div class="output" id="railOutput"></div>
+  </div>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
