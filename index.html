@@ -19,6 +19,8 @@
     <button class="btn-tab" onclick="showCipher('hill', event)">Hill</button>
     <button class="btn-tab" onclick="showCipher('poly', event)">Polyalphabetic</button>
     <button class="btn-tab" onclick="showCipher('rail', event)">Rail Fence</button>
+    <button class="btn-tab" onclick="showCipher('rsa', event)">RSA</button>
+    <button class="btn-tab" onclick="showCipher('des', event)">DES</button>
   </nav>
 </div>
 
@@ -32,7 +34,7 @@
   <div class="cipher-section active" id="caesar">
     <h2>Caesar Cipher</h2>
     <label>Text:</label>
-    <textarea id="caesarText"></textarea>
+    <textarea id="caesarText" placeholder="Enter text to encrypt/decrypt..."></textarea>
     <label>Key (Shift):</label>
     <input type="number" id="caesarKey" value="3">
     <button class="btn" onclick="caesarEncrypt()">Encrypt</button>
@@ -44,7 +46,7 @@
   <div class="cipher-section" id="mono">
     <h2>Monoalphabetic Cipher</h2>
     <label>Text:</label>
-    <textarea id="monoText"></textarea>
+    <textarea id="monoText" placeholder="Enter text to encrypt/decrypt..."></textarea>
     <label>Key (26-letter substitution alphabet):</label>
     <input id="monoKey" value="QWERTYUIOPASDFGHJKLZXCVBNM">
     <button class="btn" onclick="monoEncrypt()">Encrypt</button>
@@ -56,7 +58,7 @@
   <div class="cipher-section" id="playfair">
     <h2>Playfair Cipher</h2>
     <label>Text:</label>
-    <textarea id="playfairText"></textarea>
+    <textarea id="playfairText" placeholder="Enter text to encrypt/decrypt..."></textarea>
     <label>Key:</label>
     <input id="playfairKey" value="KEYWORD">
     <button class="btn" onclick="playfairEncrypt()">Encrypt</button>
@@ -68,7 +70,7 @@
   <div class="cipher-section" id="hill">
     <h2>Hill Cipher (2x2)</h2>
     <label>Text:</label>
-    <textarea id="hillText"></textarea>
+    <textarea id="hillText" placeholder="Enter text to encrypt/decrypt..."></textarea>
     <label>Key Matrix (4 numbers, row-wise):</label>
     <input id="hillKey" value="3 3 2 5">
     <button class="btn" onclick="hillEncrypt()">Encrypt</button>
@@ -80,7 +82,7 @@
   <div class="cipher-section" id="poly">
     <h2>Polyalphabetic Cipher</h2>
     <label>Text:</label>
-    <textarea id="vigenereText"></textarea>
+    <textarea id="vigenereText" placeholder="Enter text to encrypt/decrypt..."></textarea>
     <label>Key:</label>
     <input id="vigenereKey" value="KEY">
     <button class="btn" onclick="vigenereEncrypt()">Encrypt</button>
@@ -92,7 +94,7 @@
   <div class="cipher-section" id="rail">
     <h2>Rail Fence Cipher</h2>
     <label>Text:</label>
-    <textarea id="railText"></textarea>
+    <textarea id="railText" placeholder="Enter text to encrypt/decrypt..."></textarea>
     <label>Rails:</label>
     <input type="number" id="railKey" value="3">
     <button class="btn" onclick="railEncrypt()">Encrypt</button>
@@ -100,8 +102,66 @@
     <div class="output" id="railOutput"></div>
   </div>
 
+  <!-- RSA Cipher -->
+  <div class="cipher-section" id="rsa">
+    <h2>RSA Cipher (Educational)</h2>
+    <div class="rsa-key-section">
+      <div class="key-controls">
+        <button class="btn" onclick="rsaGenerateKeys()">Generate Keys</button>
+      </div>
+      <div class="key-fields">
+        <div class="key-field">
+          <label>Prime p:</label>
+          <input id="rsaP" value="11">
+        </div>
+        <div class="key-field">
+          <label>Prime q:</label>
+          <input id="rsaQ" value="13">
+        </div>
+        <div class="key-field">
+          <label>Modulus n:</label>
+          <input id="rsaN" value="143">
+        </div>
+        <div class="key-field">
+          <label>Public exponent e:</label>
+          <input id="rsaE" value="7">
+        </div>
+        <div class="key-field">
+          <label>Private exponent d:</label>
+          <input id="rsaD" value="103">
+        </div>
+      </div>
+      <div class="key-info">
+        <p><strong>Public Key:</strong> (n, e) = (143, 7)</p>
+        <p><strong>Private Key:</strong> (n, d) = (143, 103)</p>
+      </div>
+    </div>
+    <label>Text:</label>
+    <textarea id="rsaText" placeholder="Enter text to encrypt or hex blocks to decrypt..."></textarea>
+    <button class="btn" onclick="rsaEncrypt()">Encrypt</button>
+    <button class="btn" onclick="rsaDecrypt()">Decrypt</button>
+    <div class="output" id="rsaOutput"></div>
+    <div class="note">
+      <strong>Note:</strong> This is an educational implementation using small primes. Real RSA uses 2048+ bit keys.
+    </div>
+  </div>
+
+  <!-- DES Cipher -->
+  <div class="cipher-section" id="des">
+    <h2>DES Cipher (Simplified)</h2>
+    <label>Text:</label>
+    <textarea id="desText" placeholder="Enter text to encrypt/decrypt..."></textarea>
+    <label>Key (8 characters):</label>
+    <input id="desKey" value="DESKEY!!">
+    <button class="btn" onclick="desEncrypt()">Encrypt</button>
+    <button class="btn" onclick="desDecrypt()">Decrypt</button>
+    <div class="output" id="desOutput"></div>
+    <div class="note">
+      <strong>Note:</strong> This is a simplified educational implementation. Real DES uses 56-bit keys and 16 rounds.
+    </div>
+  </div>
+
 </div>
 <script src="script.js"></script>
 </body>
-</html>
-
+      </html>
