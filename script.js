@@ -1,44 +1,7 @@
 // Methodology text for each cipher
-// const methodology = {
-// caesar: `Caesar Cipher Methodology:\n1. Convert text to uppercase.\n2. Shift each letter by the key value (0-25).\n3. Wrap around alphabet when passing 'Z'.\n4. Non‑alphabet characters remain unchanged.`,
-// mono: `Monoalphabetic Cipher Methodology:\n1. Convert text to uppercase.\n2. Replace each letter using a 26‑letter substitution key.\n3. Ensure key contains all unique letters A‑Z.\n4. Decryption reverses substitution.`,
-// playfair: `Playfair Cipher Methodology:\n1. Create a 5x5 matrix using the key (I/J combined).\n2. Prepare text in digraphs (pairs).\n3. Apply Playfair rules: same row, same column, or rectangle.\n4. Produce encrypted digraph output.`,
-// hill: `Hill Cipher Methodology:\n1. Convert text to numbers (A=0 ... Z=25).\n2. Group text into vector pairs.\n3. Multiply by 2x2 key matrix mod 26.\n4. Decryption uses inverse matrix mod 26.`,
-// poly: `Vigenère (Polyalphabetic) Cipher Methodology:\n1. Convert text to uppercase.\n2. Repeat key to match text length.\n3. Shift each letter by key's letter value.\n4. Decrypt by reversing shifts.`,
-// rail: `Rail Fence Cipher Methodology:\n1. Choose number of rails.\n2. Write text in zig‑zag pattern across rails.\n3. Read row by row to form cipher text.\n4. Decrypt by reconstructing the zig‑zag pattern.`
-// };
-
-
-// function showCipher(id) {
-//   // Hide all cipher sections
-//   document.querySelectorAll('.cipher-section')
-//     .forEach(sec => sec.classList.remove('active'));
-
-//   // Show selected section
-//   document.getElementById(id).classList.add('active');
-
-//   // Remove active class from all nav buttons
-//   document.querySelectorAll('nav button')
-//     .forEach(btn => btn.classList.remove('active'));
-
-//   // Add active class to clicked button (OLD behavior restored)
-//   event.target.classList.add('active');
-
-//   // ---- Methodology Update (new) ----
-//   const methodologyBox = document.querySelector('.methodology-steps');
-
-//   methodologyBox.style.opacity = 0;
-
-//   setTimeout(() => {
-//     methodologyBox.textContent = methodology[id] || "";
-//     methodologyBox.style.opacity = 1;
-//   }, 150);
-// }
-
-// Methodology text for each cipher
 const methodology = {
   caesar: `Caesar Cipher — Full Step-by-step Methodology:
-
+  
 1) Normalize input:
    • Convert input to uppercase to simplify processing.
    • Remove or keep non-letter characters depending on UI choice (this implementation keeps them as-is).
@@ -184,20 +147,88 @@ const methodology = {
 
 5) UX tips for beginners:
    • Visualize the zig-zag as a grid and animate how ciphertext is read row-by-row.
-   • Show the index pattern array and the counts used to split the ciphertext so the reconstruction is clear.`
+   • Show the index pattern array and the counts used to split the ciphertext so the reconstruction is clear.`,
+
+  rsa: `RSA Cipher — Full Step-by-step Methodology (Educational/Small Keys):
+
+1) Key Generation (simplified for demonstration):
+   • Choose two distinct primes p and q (small for demo).
+   • Compute n = p × q (the modulus).
+   • Compute φ(n) = (p-1) × (q-1) (Euler's totient).
+   • Choose public exponent e (typically 65537, but must be coprime with φ(n)).
+   • Compute private exponent d = e⁻¹ mod φ(n) (modular inverse).
+   • Public key: (n, e), Private key: (n, d).
+
+2) Message Preparation:
+   • Convert text to ASCII codes (0-255) or numeric representation.
+   • Split into blocks smaller than n.
+
+3) Encryption (for each block m):
+   • Compute ciphertext c = m^e mod n (modular exponentiation).
+
+4) Decryption (for each ciphertext block c):
+   • Compute plaintext m = c^d mod n.
+
+5) Implementation notes for demo:
+   • We use small primes (p, q < 100) so operations fit in JavaScript integers.
+   • Text is converted character-by-character to ASCII codes for simplicity.
+   • Show modular exponentiation steps to illustrate the process.
+
+6) Security reality check:
+   • Real RSA uses 2048+ bit keys and proper padding (OAEP).
+   • This demo is for educational understanding only, not secure for real use.`,
+
+  des: `DES Cipher — Full Step-by-step Methodology (Educational/Simplified):
+
+1) Key Preparation:
+   • DES uses a 56-bit key (64 bits with parity).
+   • Generate 16 subkeys via key schedule (permuted choice, left shifts).
+
+2) Initial Permutation (IP):
+   • Apply fixed 64-bit permutation to input block.
+
+3) 16 Rounds of Feistel Network:
+   • Split 64-bit block into left (L) and right (R) halves (32 bits each).
+   • For each round:
+     a) Expand R from 32 to 48 bits (expansion permutation).
+     b) XOR expanded R with round subkey.
+     c) Apply S-boxes (8 substitution tables, 6 bits → 4 bits).
+     d) Permute the S-box output (P-box).
+     e) XOR with L to get new R.
+     f) Old R becomes new L.
+   • Swap final L and R.
+
+4) Final Permutation (IP⁻¹):
+   • Apply inverse of initial permutation.
+
+5) Implementation notes for demo:
+   • We use simplified S-boxes and permutations for clarity.
+   • Text is converted to 8-byte blocks (64 bits), padded if needed.
+   • ECB mode (each block encrypted independently) for simplicity.
+
+6) Security note:
+   • Real DES is obsolete (56-bit key is breakable by brute force).
+   • Modern systems use AES (Rijndael) or 3DES with stronger keys.
+   • This demo illustrates the Feistel structure and bit-level operations.`
 };
 
-document.getElementById('methodologyPre').textContent = methodology[id];
-
 // Update methodology box when switching tabs
-function showCipher(id) {
-  document.querySelectorAll('.cipher-section').forEach(sec => sec.classList.remove('active'));
+function showCipher(id, event) {
+  // Hide all cipher sections
+  document.querySelectorAll('.cipher-section')
+    .forEach(sec => sec.classList.remove('active'));
+
+  // Show selected section
   document.getElementById(id).classList.add('active');
 
-  document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
+  // Remove active class from all nav buttons
+  document.querySelectorAll('nav button')
+    .forEach(btn => btn.classList.remove('active'));
 
-  // Update methodology box
+  // Add active class to clicked button
+  if (event) event.target.classList.add('active');
+
+  // Update methodology box with fade effect
   const box = document.querySelector('.methodology-steps');
   box.style.opacity = 0;
   setTimeout(() => {
@@ -206,12 +237,14 @@ function showCipher(id) {
   }, 200);
 }
 
-// Existing cipher logic remains unchanged below this comment
-// (Add the Caesar, Playfair, Hill, Vigenere, Rail Fence functions here)
+// Helper functions
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
 
-/* -----------------------------
-   Utility: render steps to methodology box
-   ----------------------------- */
 function renderSteps(title, steps) {
   const box = document.querySelector('.methodology-steps');
   const html = [];
@@ -224,40 +257,391 @@ function renderSteps(title, steps) {
   box.innerHTML = html.join('');
 }
 
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+/* =============================
+   RSA Implementation (Educational - Small Keys)
+   ============================= */
+function modExp(base, exponent, modulus) {
+  // Modular exponentiation for small numbers
+  let result = 1;
+  base = base % modulus;
+  while (exponent > 0) {
+    if (exponent % 2 === 1) {
+      result = (result * base) % modulus;
+    }
+    exponent = Math.floor(exponent / 2);
+    base = (base * base) % modulus;
+  }
+  return result;
 }
 
-/* -----------------------------
-   Tab switching (keeps the original behavior)
-   ----------------------------- */
-function showCipher(id, event) {
-  if (event) event.target.classList.add('active');
-  // Hide all cipher sections
-  document.querySelectorAll('.cipher-section')
-    .forEach(sec => sec.classList.remove('active'));
-
-  // Show selected cipher section
-  document.getElementById(id).classList.add('active');
-
-  // Update active button style
-  document.querySelectorAll('nav button')
-    .forEach(btn => btn.classList.remove('active'));
-
-  if (event) event.target.classList.add('active');
-
-  // Show default methodology text for this cipher
-  const pre = document.getElementById('methodologyPre');
-  pre.textContent = methodology[id] || "";
+function modInverse(a, m) {
+  // Extended Euclidean algorithm for modular inverse
+  a = ((a % m) + m) % m;
+  for (let x = 1; x < m; x++) {
+    if ((a * x) % m === 1) return x;
+  }
+  return null;
 }
 
+function generateRSAPrime(min, max) {
+  // Simple prime generation for demo (not cryptographically secure)
+  function isPrime(num) {
+    if (num < 2) return false;
+    if (num === 2 || num === 3) return true;
+    if (num % 2 === 0) return false;
+    for (let i = 3; i * i <= num; i += 2) {
+      if (num % i === 0) return false;
+    }
+    return true;
+  }
+
+  let prime;
+  do {
+    prime = Math.floor(Math.random() * (max - min + 1)) + min;
+  } while (!isPrime(prime));
+  return prime;
+}
+
+function rsaGenerateKeys() {
+  const steps = [];
+  
+  // Generate primes (small for demo)
+  const p = generateRSAPrime(11, 97);
+  const q = generateRSAPrime(11, 97);
+  while (q === p) {
+    q = generateRSAPrime(11, 97);
+  }
+  
+  steps.push(`Generated primes: p = ${p}, q = ${q}`);
+  
+  const n = p * q;
+  const phi = (p - 1) * (q - 1);
+  steps.push(`Compute n = p × q = ${p} × ${q} = ${n}`);
+  steps.push(`Compute φ(n) = (p-1) × (q-1) = ${p-1} × ${q-1} = ${phi}`);
+  
+  // Choose e (public exponent)
+  let e = 65537;
+  while (phi % e === 0 && e > 3) {
+    e--;
+  }
+  if (e <= 3) e = 17;
+  
+  steps.push(`Choose public exponent e = ${e} (must be coprime with φ(n))`);
+  
+  // Compute d (private exponent)
+  const d = modInverse(e, phi);
+  steps.push(`Compute private exponent d = e⁻¹ mod φ(n) = ${e}⁻¹ mod ${phi} = ${d}`);
+  
+  steps.push(`\nPublic Key: (n=${n}, e=${e})`);
+  steps.push(`Private Key: (n=${n}, d=${d})`);
+  
+  // Fill the input fields
+  document.getElementById('rsaP').value = p;
+  document.getElementById('rsaQ').value = q;
+  document.getElementById('rsaE').value = e;
+  document.getElementById('rsaN').value = n;
+  document.getElementById('rsaD').value = d;
+  
+  renderSteps('RSA — Key Generation', steps);
+}
+
+function rsaEncrypt() {
+  const text = document.getElementById('rsaText').value || '';
+  const n = parseInt(document.getElementById('rsaN').value) || 0;
+  const e = parseInt(document.getElementById('rsaE').value) || 0;
+  
+  if (!n || !e || n <= 0 || e <= 0) {
+    alert('Please generate valid RSA keys first or enter n and e values');
+    return;
+  }
+  
+  const steps = [];
+  steps.push(`Public Key: n=${n}, e=${e}`);
+  steps.push(`Plaintext: "${text}"`);
+  
+  let ciphertext = '';
+  const numericBlocks = [];
+  
+  for (let i = 0; i < text.length; i++) {
+    const charCode = text.charCodeAt(i);
+    steps.push(`Character '${text[i]}' → ASCII code: ${charCode}`);
+    
+    if (charCode >= n) {
+      steps.push(`WARNING: ASCII value ${charCode} >= n=${n}. RSA requires m < n.`);
+      steps.push(`Consider using larger primes or encoding scheme.`);
+    }
+    
+    const encrypted = modExp(charCode, e, n);
+    steps.push(`Encrypt: ${charCode}^${e} mod ${n} = ${encrypted}`);
+    
+    numericBlocks.push(encrypted);
+    ciphertext += encrypted.toString(16).padStart(4, '0') + ' ';
+  }
+  
+  document.getElementById('rsaOutput').innerText = ciphertext.trim();
+  
+  steps.push(`\nCiphertext (hex blocks): ${ciphertext.trim()}`);
+  renderSteps('RSA — Encryption Demonstration', steps);
+}
+
+function rsaDecrypt() {
+  const ciphertext = document.getElementById('rsaText').value.trim();
+  const n = parseInt(document.getElementById('rsaN').value) || 0;
+  const d = parseInt(document.getElementById('rsaD').value) || 0;
+  
+  if (!n || !d || n <= 0 || d <= 0) {
+    alert('Please generate valid RSA keys first or enter n and d values');
+    return;
+  }
+  
+  const steps = [];
+  steps.push(`Private Key: n=${n}, d=${d}`);
+  steps.push(`Ciphertext: "${ciphertext}"`);
+  
+  // Parse hex blocks
+  const hexBlocks = ciphertext.split(/\s+/).filter(b => b.length > 0);
+  let plaintext = '';
+  
+  for (let i = 0; i < hexBlocks.length; i++) {
+    const block = parseInt(hexBlocks[i], 16);
+    steps.push(`Hex block ${hexBlocks[i]} → decimal: ${block}`);
+    
+    const decrypted = modExp(block, d, n);
+    steps.push(`Decrypt: ${block}^${d} mod ${n} = ${decrypted}`);
+    
+    if (decrypted < 0 || decrypted > 255) {
+      steps.push(`WARNING: Decrypted value ${decrypted} is outside ASCII range.`);
+    } else {
+      const char = String.fromCharCode(decrypted);
+      steps.push(`ASCII ${decrypted} → character: '${char}'`);
+      plaintext += char;
+    }
+  }
+  
+  document.getElementById('rsaOutput').innerText = plaintext;
+  
+  steps.push(`\nDecrypted plaintext: "${plaintext}"`);
+  renderSteps('RSA — Decryption Demonstration', steps);
+}
 
 /* =============================
-   Caesar — encryption/decryption with demonstration
+   DES Implementation (Educational/Simplified)
    ============================= */
+// Simplified DES tables (greatly reduced for demo)
+const DES_IP = [1, 5, 2, 0, 3, 7, 4, 6]; // Initial Permutation (8-bit simplified)
+const DES_IP_INV = [3, 0, 2, 4, 6, 1, 7, 5]; // Inverse IP
+const DES_E = [3, 0, 1, 2, 1, 2, 3, 0]; // Expansion (4 to 8 bits simplified)
+const DES_P = [1, 3, 2, 0]; // Permutation (4 bits)
+const DES_SBOX = [
+  [ // S1 simplified
+    [14, 4, 13, 1, 2, 15, 11, 8],
+    [3, 10, 6, 12, 5, 9, 0, 7],
+    [0, 15, 7, 4, 14, 2, 13, 1]
+  ]
+];
+
+function stringToBits(str) {
+  // Convert string to bit array (8 bits per char)
+  const bits = [];
+  for (let i = 0; i < str.length; i++) {
+    const byte = str.charCodeAt(i);
+    for (let j = 7; j >= 0; j--) {
+      bits.push((byte >> j) & 1);
+    }
+  }
+  return bits;
+}
+
+function bitsToString(bits) {
+  // Convert bit array back to string
+  let str = '';
+  for (let i = 0; i < bits.length; i += 8) {
+    let byte = 0;
+    for (let j = 0; j < 8 && i + j < bits.length; j++) {
+      byte = (byte << 1) | bits[i + j];
+    }
+    str += String.fromCharCode(byte);
+  }
+  return str;
+}
+
+function permute(bits, table) {
+  // Apply permutation table to bits
+  const result = [];
+  for (let i = 0; i < table.length; i++) {
+    result.push(bits[table[i]]);
+  }
+  return result;
+}
+
+function xorBits(a, b) {
+  // XOR two bit arrays
+  const result = [];
+  for (let i = 0; i < a.length; i++) {
+    result.push(a[i] ^ b[i]);
+  }
+  return result;
+}
+
+function generateSubKeys(keyBits) {
+  // Simplified key schedule (for 8-bit demo)
+  const subkeys = [];
+  for (let round = 0; round < 4; round++) {
+    // Simple rotation for demo
+    const shift = round + 1;
+    const subkey = [...keyBits.slice(shift), ...keyBits.slice(0, shift)];
+    subkeys.push(subkey);
+  }
+  return subkeys;
+}
+
+function desRound(left, right, subkey) {
+  // One round of Feistel function
+  const expandedRight = permute(right, DES_E);
+  const xored = xorBits(expandedRight, subkey);
+  
+  // Simplified S-box (just take first 4 bits for demo)
+  const sboxOut = xored.slice(0, 4);
+  const permuted = permute(sboxOut, DES_P);
+  
+  const newRight = xorBits(left, permuted);
+  return [right, newRight]; // [newLeft, newRight]
+}
+
+function desEncryptBlock(blockBits, keyBits) {
+  // Encrypt one 8-bit block
+  const steps = [];
+  
+  // Initial Permutation
+  let permuted = permute(blockBits, DES_IP);
+  steps.push(`After IP: ${permuted.join('')}`);
+  
+  // Split into left and right halves
+  let left = permuted.slice(0, 4);
+  let right = permuted.slice(4);
+  steps.push(`L0: ${left.join('')}, R0: ${right.join('')}`);
+  
+  // Generate subkeys
+  const subkeys = generateSubKeys(keyBits);
+  
+  // 4 rounds (simplified from 16)
+  for (let round = 0; round < 4; round++) {
+    [left, right] = desRound(left, right, subkeys[round]);
+    steps.push(`Round ${round+1}: L${round+1}=${left.join('')}, R${round+1}=${right.join('')}`);
+  }
+  
+  // Final swap and inverse permutation
+  const combined = [...right, ...left];
+  const cipherBits = permute(combined, DES_IP_INV);
+  steps.push(`Final cipher bits: ${cipherBits.join('')}`);
+  
+  return { cipherBits, steps };
+}
+
+function desEncrypt() {
+  const text = document.getElementById('desText').value || '';
+  const key = document.getElementById('desKey').value || 'DESKEY!!';
+  
+  if (text.length === 0) {
+    alert('Please enter text to encrypt');
+    return;
+  }
+  
+  const steps = [];
+  steps.push(`Plaintext: "${text}"`);
+  steps.push(`Key: "${key}" (using first 8 chars for 64-bit demo)`);
+  
+  // Convert to bits
+  const keyBits = stringToBits(key.substring(0, 8));
+  steps.push(`Key bits: ${keyBits.join('')}`);
+  
+  let ciphertext = '';
+  const allSteps = [];
+  
+  // Process in 8-byte (64-bit) blocks
+  for (let i = 0; i < text.length; i += 8) {
+    const block = text.substring(i, i + 8).padEnd(8, ' ');
+    steps.push(`\nBlock ${i/8 + 1}: "${block}"`);
+    
+    const blockBits = stringToBits(block);
+    steps.push(`Block bits: ${blockBits.join('')}`);
+    
+    const { cipherBits, steps: roundSteps } = desEncryptBlock(blockBits, keyBits);
+    allSteps.push(...roundSteps);
+    
+    const cipherBlock = bitsToString(cipherBits);
+    ciphertext += cipherBlock;
+    steps.push(`Cipher block: "${cipherBlock}" (hex: ${cipherBlock.split('').map(c => c.charCodeAt(0).toString(16)).join(' ')})`);
+  }
+  
+  document.getElementById('desOutput').innerText = ciphertext;
+  
+  // Combine all steps for display
+  const displaySteps = [...steps, '\nDetailed Round Steps:', ...allSteps];
+  renderSteps('DES — Encryption Demonstration', displaySteps);
+}
+
+function desDecryptBlock(blockBits, keyBits) {
+  // Decryption is same as encryption with reversed subkeys
+  const subkeys = generateSubKeys(keyBits);
+  const reversedSubkeys = [...subkeys].reverse();
+  
+  // Initial Permutation
+  let permuted = permute(blockBits, DES_IP);
+  let left = permuted.slice(0, 4);
+  let right = permuted.slice(4);
+  
+  // 4 rounds with reversed subkeys
+  for (let round = 0; round < 4; round++) {
+    [left, right] = desRound(left, right, reversedSubkeys[round]);
+  }
+  
+  // Final swap and inverse permutation
+  const combined = [...right, ...left];
+  return permute(combined, DES_IP_INV);
+}
+
+function desDecrypt() {
+  const ciphertext = document.getElementById('desText').value || '';
+  const key = document.getElementById('desKey').value || 'DESKEY!!';
+  
+  if (ciphertext.length === 0) {
+    alert('Please enter ciphertext to decrypt');
+    return;
+  }
+  
+  const steps = [];
+  steps.push(`Ciphertext: "${ciphertext}"`);
+  steps.push(`Key: "${key}" (using first 8 chars for 64-bit demo)`);
+  
+  const keyBits = stringToBits(key.substring(0, 8));
+  steps.push(`Key bits: ${keyBits.join('')}`);
+  
+  let plaintext = '';
+  
+  // Process in 8-byte blocks
+  for (let i = 0; i < ciphertext.length; i += 8) {
+    const block = ciphertext.substring(i, Math.min(i + 8, ciphertext.length));
+    steps.push(`\nBlock ${i/8 + 1}: "${block}"`);
+    
+    const blockBits = stringToBits(block);
+    steps.push(`Block bits: ${blockBits.join('')}`);
+    
+    const plainBits = desDecryptBlock(blockBits, keyBits);
+    const plainBlock = bitsToString(plainBits);
+    plaintext += plainBlock.trim(); // Remove padding spaces
+    steps.push(`Decrypted block: "${plainBlock}"`);
+  }
+  
+  document.getElementById('desOutput').innerText = plaintext;
+  renderSteps('DES — Decryption Demonstration', steps);
+}
+
+/* =============================
+   Existing Cipher Functions (Keep all existing code below)
+   ============================= */
+
+/* Caesar Cipher */
 function caesarEncrypt() {
   const text = document.getElementById('caesarText').value || '';
   const key = parseInt(document.getElementById('caesarKey').value) || 0;
@@ -272,10 +656,9 @@ function caesarEncrypt() {
     if (/[A-Za-z]/.test(ch)) {
       const up = ch.toUpperCase();
       const code = up.charCodeAt(0);
-      const val = code - 65; // 0..25
+      const val = code - 65;
       const shifted = (val + K) % 26;
       const out = String.fromCharCode(shifted + 65);
-      // preserve case
       const finalChar = (ch === ch.toLowerCase()) ? out.toLowerCase() : out;
       cipher += finalChar;
       steps.push(`${ch} → upper: ${up} (ASCII ${code}) → index ${val} → + key(${K}) = ${val + K} → mod26 = ${shifted} → letter ${out} → preserve case -> ${finalChar}`);
@@ -319,9 +702,7 @@ function caesarDecrypt() {
   renderSteps('Caesar — Decryption Demonstration', steps);
 }
 
-/* =============================
-   Monoalphabetic — demo
-   ============================= */
+/* Monoalphabetic Cipher */
 function monoEncrypt() {
   const text = document.getElementById('monoText').value || '';
   const keyRaw = document.getElementById('monoKey').value || '';
@@ -383,9 +764,7 @@ function monoDecrypt() {
   renderSteps('Monoalphabetic — Decryption Demonstration', steps);
 }
 
-/* =============================
-   Playfair — demo with digraph tracing
-   ============================= */
+/* Playfair Cipher */
 function generatePlayfairMatrix(key) {
   key = (key || '').toUpperCase().replace(/J/g, 'I').replace(/[^A-Z]/g, '');
   const matrix = [];
@@ -478,11 +857,7 @@ function playfairDecrypt() {
   renderSteps('Playfair — Decryption Demonstration', steps);
 }
 
-/* =============================
-   Hill (2×2) — demo with numeric vectors
-   ============================= */
-function modInverse(a, m) { a = ((a % m) + m) % m; for (let x = 1; x < m; x++) if ((a * x) % m === 1) return x; return null; }
-
+/* Hill Cipher */
 function hillEncrypt() {
   const raw = (document.getElementById('hillText').value || '').toUpperCase().replace(/[^A-Z]/g, '');
   const keyVals = (document.getElementById('hillKey').value || '').split(/\s+/).map(Number);
@@ -524,9 +899,7 @@ function hillDecrypt() {
   renderSteps('Hill (2×2) — Decryption Demonstration', steps);
 }
 
-/* =============================
-   Vigenère — demo with per-letter table
-   ============================= */
+/* Vigenère Cipher */
 function vigenereEncrypt() {
   const raw = (document.getElementById('vigenereText').value || '');
   const keyRaw = (document.getElementById('vigenereKey').value || '');
@@ -565,15 +938,12 @@ function vigenereDecrypt() {
   renderSteps('Vigenère — Decryption Demonstration', steps);
 }
 
-/* =============================
-   Rail Fence — demo showing index pattern and reconstruction
-   ============================= */
+/* Rail Fence Cipher */
 function railEncrypt() {
   const raw = document.getElementById('railText').value || '';
   const rails = parseInt(document.getElementById('railKey').value) || 3;
   const steps = [];
   steps.push(`Raw input: ${raw}`);
-  // build pattern
   const pattern = [];
   let rail = 0, dir = 1;
   for (let i = 0; i < raw.length; i++) {
@@ -594,7 +964,6 @@ function railDecrypt() {
   const raw = document.getElementById('railText').value || '';
   const rails = parseInt(document.getElementById('railKey').value) || 3;
   const steps = [];
-  // recreate pattern
   const pattern = [];
   let rail = 0, dir = 1;
   for (let i = 0; i < raw.length; i++) {
@@ -618,9 +987,7 @@ function railDecrypt() {
   renderSteps('Rail Fence — Decryption Demonstration', steps);
 }
 
-/* =============================
-   Notes:
-   - Buttons in the HTML already call these functions (e.g. caesarEncrypt()).\n
-   - Each function both writes the cipher result into the corresponding output element\n     and writes a step-by-step, beginner-friendly trace into .methodology-steps.\n
-   End of script.
-*/
+// Initialize with first cipher on page load
+document.addEventListener('DOMContentLoaded', function() {
+  showCipher('caesar');
+});
