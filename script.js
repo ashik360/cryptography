@@ -1,6 +1,6 @@
 // Methodology text for each cipher
 const methodology = {
-  caesar: `Caesar Cipher — Full Step-by-step Methodology:
+  caesar: `Caesar Cipher —:
   
 1) Normalize input:
    • Convert input to uppercase to simplify processing.
@@ -27,7 +27,7 @@ const methodology = {
    • Key values can be any integer; we reduce with key = key % 26.
    • Show sample mapping on the page (A->D when key=3) to make the effect obvious.`,
 
-  mono: `Monoalphabetic (Substitution) Cipher — Full Step-by-step Methodology:
+  mono: `Monoalphabetic (Substitution) Cipher —:
 
 1) Normalize input:
    • Convert text and key to uppercase.
@@ -77,7 +77,7 @@ const methodology = {
    • Display the 5×5 matrix visually on the page so beginners can trace pairs.
    • Show the digraph breakdown and intermediate steps for the selected pair (e.g., show coordinates and the rule applied).`,
 
-  hill: `Hill Cipher (2×2) — Full Step-by-step Methodology (with modular arithmetic details):
+  hill: `Hill Cipher (2×2) — (with modular arithmetic details):
 
 1) Normalize text and pad:
    • Convert to uppercase and remove non-letters.
@@ -104,7 +104,7 @@ const methodology = {
    • Explain how to compute modular inverse with the extended Euclidean algorithm or trial search (this implementation uses trial search).
    • Display the numeric matrix and intermediate numeric vectors on the page during encrypt/decrypt so learners can follow.`,
 
-  poly: `Vigenère (Polyalphabetic) Cipher — Full Step-by-step Methodology:
+  poly: `Vigenère (Polyalphabetic) Cipher -:
 
 1) Normalize input and key:
    • Convert both text and key to uppercase and strip non-letter characters from the key.
@@ -127,7 +127,7 @@ const methodology = {
    • Show alignment of plaintext, key letter, numeric values and resulting cipher letter in a table for clarity.
    • Vigenère resists simple frequency analysis but can be broken with Kasiski examination and frequency methods.`,
 
-  rail: `Rail Fence Cipher — Full Step-by-step Methodology:
+  rail: `Rail Fence Cipher —:
 
 1) Choose rails (R) and normalize text:
    • Use text as-is (spaces may be kept or removed depending on UI choice).
@@ -149,7 +149,7 @@ const methodology = {
    • Visualize the zig-zag as a grid and animate how ciphertext is read row-by-row.
    • Show the index pattern array and the counts used to split the ciphertext so the reconstruction is clear.`,
 
-  rsa: `RSA Cipher — Full Step-by-step Methodology (Educational/Small Keys):
+  rsa: `RSA Cipher —:
 
 1) Key Generation (simplified for demonstration):
    • Choose two distinct primes p and q (small for demo).
@@ -178,7 +178,7 @@ const methodology = {
    • Real RSA uses 2048+ bit keys and proper padding (OAEP).
    • This demo is for educational understanding only, not secure for real use.`,
 
-  des: `DES Cipher — Full Step-by-step Methodology (Educational/Simplified):
+  des: `DES Cipher —:
 
 1) Key Preparation:
    • DES uses a 56-bit key (64 bits with parity).
@@ -991,3 +991,4 @@ function railDecrypt() {
 document.addEventListener('DOMContentLoaded', function() {
   showCipher('caesar');
 });
+
