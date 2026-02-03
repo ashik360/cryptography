@@ -48,7 +48,7 @@ const methodology = {
 5) Security note for beginners:
    • Monoalphabetic substitution is easy to break with frequency analysis — useful for learning, not secure for real secrets.`,
 
-  playfair: `Playfair Cipher — Full Step-by-step Methodology (Beginner-friendly):
+  playfair: `Playfair Cipher —:
 
 1) Prepare and normalize the key:
    • Convert key to uppercase and remove non-letters.
@@ -77,7 +77,7 @@ const methodology = {
    • Display the 5×5 matrix visually on the page so beginners can trace pairs.
    • Show the digraph breakdown and intermediate steps for the selected pair (e.g., show coordinates and the rule applied).`,
 
-  hill: `Hill Cipher (2×2) — (with modular arithmetic details):
+  hill: `Hill Cipher (2×2) —:
 
 1) Normalize text and pad:
    • Convert to uppercase and remove non-letters.
@@ -151,7 +151,7 @@ const methodology = {
 
   rsa: `RSA Cipher —:
 
-1) Key Generation (simplified for demonstration):
+1) Key Generation:
    • Choose two distinct primes p and q (small for demo).
    • Compute n = p × q (the modulus).
    • Compute φ(n) = (p-1) × (q-1) (Euler's totient).
@@ -176,7 +176,7 @@ const methodology = {
 
 6) Security reality check:
    • Real RSA uses 2048+ bit keys and proper padding (OAEP).
-   • This demo is for educational understanding only, not secure for real use.`,
+   • This demo is for  understanding only, not secure for real use.`,
 
   des: `DES Cipher —:
 
@@ -258,7 +258,7 @@ function renderSteps(title, steps) {
 }
 
 /* =============================
-   RSA Implementation (Educational - Small Keys)
+   RSA Implementation ( - Small Keys)
    ============================= */
 function modExp(base, exponent, modulus) {
   // Modular exponentiation for small numbers
@@ -425,7 +425,7 @@ function rsaDecrypt() {
 }
 
 /* =============================
-   DES Implementation (Educational/Simplified)
+   DES Implementation (/Simplified)
    ============================= */
 // Simplified DES tables (greatly reduced for demo)
 const DES_IP = [1, 5, 2, 0, 3, 7, 4, 6]; // Initial Permutation (8-bit simplified)

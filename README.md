@@ -8,6 +8,8 @@ An interactive, beginner-friendly tool that visually demonstrates the encryption
 - Hill Cipher (2×2)  
 - Vigenère (Polyalphabetic)  
 - Rail Fence Cipher  
+- DES  
+- RSA - AES 
 
 Each cipher includes:
 - Full methodology / explanation  

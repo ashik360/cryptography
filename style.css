@@ -85,6 +85,8 @@ header h1{
   font-size:13px;
   margin-bottom:18px;
   min-height:56px;
+  white-space: pre-wrap;
+  font-family: monospace;
 }
 .container{
   display:grid;
